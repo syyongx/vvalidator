@@ -237,7 +237,7 @@ func ValidateFloate(data interface{}, key string, min, max float64, code int, no
 			return def[0]
 		}
 
-		v, err := strconv.ParseFloat(val.(string), 64)
+		v, err := strconv.ParseFloat(value, 64)
 		if err != nil {
 			if ldef == 0 {
 				panic(NewError(key+" must be a valid interger", code, note))
