@@ -159,7 +159,7 @@ func ValidateFloate(data interface{}, key string, min, max float64, code int, no
 }
 
 // Validate enum int.
-func ValidateEnumInt(data interface{}, key string, validValues []int, code int, note string, def ... int) int {
+func ValidateEnumInt(data interface{}, key string, validValues []int, def ... int) int {
 	return ValidateEnumInte(data, key, validValues, DefaultCode, "", def...)
 }
 
@@ -175,7 +175,7 @@ func ValidateEnumInte(data interface{}, key string, validValues []int, code int,
 }
 
 // Validate enum int64
-func ValidateEnumInt64(data interface{}, key string, validValues []int64, code int, note string, def ... int64) int64 {
+func ValidateEnumInt64(data interface{}, key string, validValues []int64, def ... int64) int64 {
 	return ValidateEnumInt64e(data, key, validValues, DefaultCode, "", def...)
 }
 
