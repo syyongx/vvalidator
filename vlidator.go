@@ -108,7 +108,8 @@ func ValidateInt64e(data interface{}, key string, min, max int64, code int, note
 	}
 }
 
-func ValidateFloat(data interface{}, key string, min, max float64, code int, note string, def ... float64) float64 {
+//  Validate 64 bit float.
+func ValidateFloat(data interface{}, key string, min, max float64, def ... float64) float64 {
 	return ValidateFloate(data, key, min, max, DefaultCode, "", def...)
 }
 
