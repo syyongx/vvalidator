@@ -219,10 +219,10 @@ func ValidateStringe(data interface{}, key string, min, max int, code int, note 
 		return def[0]
 	}
 	if min != -1 && length < min {
-		panic(NewError(key+"is too short (minimum is "+strconv.Itoa(min)+" characters)", code, note))
+		panic(NewError(key+" is too short (minimum is "+strconv.Itoa(min)+" characters)", code, note))
 	}
 	if max != -1 && length > max {
-		panic(NewError(key+"is too long (maximum is "+strconv.Itoa(max)+" characters)", code, note))
+		panic(NewError(key+" is too long (maximum is "+strconv.Itoa(max)+" characters)", code, note))
 	}
 	return val.(string)
 }
