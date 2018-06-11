@@ -10,7 +10,7 @@ import (
 	"unicode"
 )
 
-var (
+const (
 	PatternNumeric        = `^[0-9]+$`
 	PatternInt            = `^(?:[-+]?(?:0|[1-9][0-9]*))$`
 	PatternFloat          = `^(?:[-+]?(?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$`
@@ -175,28 +175,28 @@ func IsHalfWidth(str string) bool {
 // 'ripemd128', 'ripemd160', 'tiger128', 'tiger160', 'tiger192',
 // 'crc32', 'crc32b']
 func IsHash(str, algorithm string) bool {
-	len := "0"
+	length := "0"
 	algo := strings.ToLower(algorithm)
 
 	if algo == "crc32" || algo == "crc32b" {
-		len = "8"
+		length = "8"
 	} else if algo == "md5" || algo == "md4" || algo == "ripemd128" || algo == "tiger128" {
-		len = "32"
+		length = "32"
 	} else if algo == "sha1" || algo == "ripemd160" || algo == "tiger160" {
-		len = "40"
+		length = "40"
 	} else if algo == "tiger192" {
-		len = "48"
+		length = "48"
 	} else if algo == "sha256" {
-		len = "64"
+		length = "64"
 	} else if algo == "sha384" {
-		len = "96"
+		length = "96"
 	} else if algo == "sha512" {
-		len = "128"
+		length = "128"
 	} else {
 		return false
 	}
 
-	return regexp.MustCompile("^[a-f0-9]{" + len + "}$").MatchString(str)
+	return regexp.MustCompile("^[a-f0-9]{" + length + "}$").MatchString(str)
 }
 
 // IsMAC check if a string is valid MAC address.
