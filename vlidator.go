@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 	"unicode/utf8"
-	"github.com/kataras/iris/core/errors"
+	"errors"
 )
 
 // Validate 32 bit integer
