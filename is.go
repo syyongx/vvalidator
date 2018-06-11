@@ -177,21 +177,22 @@ func IsHash(str, algorithm string) bool {
 	length := "0"
 	algo := strings.ToLower(algorithm)
 
-	if algo == "crc32" || algo == "crc32b" {
+	switch algo {
+	case "crc32", "crc32b":
 		length = "8"
-	} else if algo == "md5" || algo == "md4" || algo == "ripemd128" || algo == "tiger128" {
+	case "md5", "md4", "ripemd128", "tiger128":
 		length = "32"
-	} else if algo == "sha1" || algo == "ripemd160" || algo == "tiger160" {
+	case "sha1", "ripemd160", "tiger160":
 		length = "40"
-	} else if algo == "tiger192" {
+	case "tiger192":
 		length = "48"
-	} else if algo == "sha256" {
+	case "sha256":
 		length = "64"
-	} else if algo == "sha384" {
+	case "sha384":
 		length = "96"
-	} else if algo == "sha512" {
+	case "sha512":
 		length = "128"
-	} else {
+	default:
 		return false
 	}
 
