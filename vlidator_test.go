@@ -20,16 +20,21 @@ func TestValidate(t *testing.T) {
 		"height":   "1.5",
 	}
 
-	uid1 := ValidateInt(params, "uid", 0, 200, 10)
+	uid1, err1 := ValidateInt(params, "uid", 0, 200, 10)
 	equal(t, 123, uid1)
-	uid2 := ValidateInt(params, "uids", 0, 200, 10)
+	equal(t, nil, err1)
+	uid2, err2 := ValidateInt(params, "uids", 0, 200, 10)
 	equal(t, 10, uid2)
-	uid3 := ValidateInt(params, "uids", 0, 10, 10)
+	equal(t, nil, err2)
+	uid3, err3 := ValidateInt(params, "uids", 0, 10, 10)
 	equal(t, 10, uid3)
-	uid4 := ValidateInt(params, "uid", 0, 10)
+	equal(t, nil, err3)
+	uid4, err4 := ValidateInt(params, "uid", 0, 10)
 	fmt.Println(uid4)
-	str := ValidateString(params, "nickname", 0, 20, "default")
+	equal(t, "uid is too big (maximum is 10)", err4.Error())
+	str, err5 := ValidateString(params, "nickname", 0, 20, "default")
 	equal(t, "fengmoti", str)
+	equal(t, "uid is too big (maximum is 10)", err5.Error())
 }
 
 // Expected to be equal.
