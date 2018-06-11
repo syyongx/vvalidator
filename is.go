@@ -4,6 +4,8 @@ import (
 	"regexp"
 	"strings"
 	"net"
+	"time"
+	"strconv"
 )
 
 var (
@@ -16,7 +18,6 @@ var (
 	PatternLatitude       = `^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$`
 	PatternLongitude      = `^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$`
 	PatternBase64         = `^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=|[A-Za-z0-9+\\/]{4})$`
-	PatternLowerMD5       = `^[0-9a-f]{32}$`
 	PatternASCII          = `^[\x00-\x7F]+$`
 	PatternPrintableASCII = `^[\x20-\x7E]+$`
 	PatternIP             = `(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))`
@@ -102,6 +103,14 @@ func IsBase64(str string) bool {
 	return regexp.MustCompile(PatternBase64).MatchString(str)
 }
 
+// IsPort checks if a string represents a valid port.
+func IsPort(str string) bool {
+	if n, err := strconv.Atoi(str); err == nil && n > 0 && n < 65536 {
+		return true
+	}
+	return false
+}
+
 // IsURL checks if the string is URL.
 func IsURL(str string) bool {
 	return regexp.MustCompile(PatternURL).MatchString(str)
@@ -124,7 +133,14 @@ func IsEmail(str string) bool {
 
 // IsWinPath checks if the string is windows path.
 func IsWinPath(str string) bool {
-	return regexp.MustCompile(PatternWinPath).MatchString(str)
+	if regexp.MustCompile(PatternWinPath).MatchString(str) {
+		// http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx#maxpath
+		if len(str[3:]) > 32767 {
+			return false
+		}
+		return true
+	}
+	return false
 }
 
 // IsUnixPath checks if the string is unix path.
@@ -175,4 +191,33 @@ func IsHash(str, algorithm string) bool {
 	}
 
 	return regexp.MustCompile("^[a-f0-9]{" + len + "}$").MatchString(str)
+}
+
+// IsMAC check if a string is valid MAC address.
+// Possible MAC formats:
+// 01:23:45:67:89:ab
+// 01:23:45:67:89:ab:cd:ef
+// 01-23-45-67-89-ab
+// 01-23-45-67-89-ab-cd-ef
+// 0123.4567.89ab
+// 0123.4567.89ab.cdef
+func IsMAC(str string) bool {
+	_, err := net.ParseMAC(str)
+	return err == nil
+}
+
+// IsTime check if string is valid according to given format
+func IsTime(str string, format string) bool {
+	_, err := time.Parse(format, str)
+	return err == nil
+}
+
+// IsRFC3339 check if string is valid timestamp value according to RFC3339
+func IsRFC3339(str string) bool {
+	return IsTime(str, time.RFC3339)
+}
+
+// IsRFC3339WithoutZone check if string is valid timestamp value according to RFC3339 which excludes the timezone.
+func IsRFC3339WithoutZone(str string) bool {
+	return IsTime(str, "2006-01-02T15:04:05")
 }
