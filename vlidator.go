@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 	"unicode/utf8"
+	"github.com/kataras/iris/core/errors"
 )
 
 // Validate 32 bit integer
@@ -18,7 +19,10 @@ func ValidateInte(data interface{}, key string, min, max int, code int, note str
 	if ldef > 0 {
 		defVal = def[0]
 	}
-	val := checkExist(data, key, code, note, defVal)
+	val, err := checkExist(data, key, defVal)
+	if err != nil {
+		panic(NewError(err.Error(), code, note))
+	}
 
 	switch val.(type) {
 	case int:
@@ -69,7 +73,10 @@ func ValidateInt64e(data interface{}, key string, min, max int64, code int, note
 	if ldef > 0 {
 		defVal = def[0]
 	}
-	val := checkExist(data, key, code, note, defVal)
+	val, err := checkExist(data, key, defVal)
+	if err != nil {
+		panic(NewError(err.Error(), code, note))
+	}
 
 	switch val.(type) {
 	case int64:
@@ -120,7 +127,11 @@ func ValidateFloate(data interface{}, key string, min, max float64, code int, no
 	if ldef > 0 {
 		defVal = def[0]
 	}
-	val := checkExist(data, key, code, note, defVal)
+	val, err := checkExist(data, key, defVal)
+	if err != nil {
+		panic(NewError(err.Error(), code, note))
+	}
+
 	switch val.(type) {
 	case float64:
 		return val.(float64)
@@ -212,7 +223,10 @@ func ValidateStringe(data interface{}, key string, min, max int, code int, note 
 	if len(def) != 0 {
 		defVal = def[0]
 	}
-	val := checkExist(data, key, code, note, defVal)
+	val, err := checkExist(data, key, defVal)
+	if err != nil {
+		panic(NewError(err.Error(), code, note))
+	}
 
 	length := utf8.RuneCountInString(val.(string))
 	if len(def) > 0 && length == 0 {
@@ -243,7 +257,10 @@ func ValidateSlicee(data interface{}, key, sep string, min, max int, code int, n
 	if len(def) != 0 {
 		defVal = def[0]
 	}
-	val := checkExist(data, key, code, note, defVal)
+	val, err := checkExist(data, key, defVal)
+	if err != nil {
+		panic(NewError(err.Error(), code, note))
+	}
 
 	vals := strings.Split(val.(string), sep)
 	length := len(vals)
@@ -257,7 +274,7 @@ func ValidateSlicee(data interface{}, key, sep string, min, max int, code int, n
 }
 
 // Chekc exist
-func checkExist(data interface{}, key string, code int, note string, def interface{}) interface{} {
+func checkExist(data interface{}, key string, def interface{}) (interface{}, error) {
 	var val string
 	switch data.(type) {
 	case string:
@@ -267,21 +284,21 @@ func checkExist(data interface{}, key string, code int, note string, def interfa
 			val = value
 		} else {
 			if def == nil {
-				panic(NewError(key+" is required", code, note))
+				return nil, errors.New(key + " is required")
 			}
-			return def
+			return def, nil
 		}
 	default:
-		panic(NewError("data type invalid, must be string or map[string]string", code, note))
+		return nil, errors.New("data type invalid, must be string or map[string]string")
 	}
 
 	if val == "" {
 		if def == nil {
-			panic(NewError(key+" can't be empty", code, note))
+			return nil, errors.New(key + " can't be empty")
 		} else {
-			return def
+			return def, nil
 		}
 	}
 
-	return val
+	return val, nil
 }
