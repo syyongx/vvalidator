@@ -38,8 +38,6 @@ const (
 	PatternHalfWidth      = `[\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]`
 	PatternHexcolor       = `^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`
 	PatternRGBcolor       = `^rgb\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*\\)$`
-	PatternLowerCase      = `.*[[:lower:]]`
-	PatternUpperCase      = `.*[[:upper:]]`
 )
 
 // Check is integer
@@ -273,14 +271,4 @@ func IsLowerCase(str string) bool {
 // IsUpperCase check if the string is uppercase.
 func IsUpperCase(str string) bool {
 	return str == strings.ToUpper(str)
-}
-
-// HasLowerCase check if the string contains at least 1 lowercase.
-func HasLowerCase(str string) bool {
-	return regexp.MustCompile(PatternLowerCase).MatchString(str)
-}
-
-// HasUpperCase check if the string contians as least 1 uppercase.
-func HasUpperCase(str string) bool {
-	return regexp.MustCompile(PatternUpperCase).MatchString(str)
 }
