@@ -54,18 +54,22 @@ func IsHexadecimal(str string) bool {
 	return regexp.MustCompile(PatternHexadecimal).MatchString(str)
 }
 
+// IsAlpha checks if the string contains only letters (a-zA-Z).
 func IsAlpha(str string) bool {
 	return regexp.MustCompile(PatternAlpha).MatchString(str)
 }
 
+// IsAlphanumeric checks if the string contains only letters(a-zA-Z) and numbers.
 func IsAlphanumeric(str string) bool {
 	return regexp.MustCompile(PatternAlphanumeric).MatchString(str)
 }
 
+// IsIP checks if the string is valid IP.
 func IsIP(str string) bool {
 	return net.ParseIP(str) != nil
 }
 
+// IsIPv4 checks if the string is valid IPv4.
 func IsIPv4(str string) bool {
 	ip := net.ParseIP(str)
 	if ip == nil {
@@ -74,6 +78,7 @@ func IsIPv4(str string) bool {
 	return strings.Contains(str, ".")
 }
 
+// IsIPv6 checks if the string is valid IPv6.
 func IsIPv6(str string) bool {
 	ip := net.ParseIP(str)
 	if ip == nil {
@@ -82,68 +87,92 @@ func IsIPv6(str string) bool {
 	return strings.Contains(str, ":")
 }
 
-// Check if the string is valid latitude.
+// IsLatitude checks if the string is valid latitude.
 func IsLatitude(str string) bool {
 	return regexp.MustCompile(PatternLatitude).MatchString(str)
 }
 
-// Check if the string is valid longitude.
+// IsLongitude checks if the string is valid longitude.
 func IsLongitude(str string) bool {
 	return regexp.MustCompile(PatternLongitude).MatchString(str)
 }
 
-// Check if the string is MD5 encoded.
-func IsMD5(str string) bool {
-	str = strings.ToLower(str)
-	return regexp.MustCompile(PatternLowerMD5).MatchString(str)
-}
-
-// Check if the string is base64 encoded.
+// IsBase64 checks if the string is base64 encoded.
 func IsBase64(str string) bool {
 	return regexp.MustCompile(PatternBase64).MatchString(str)
 }
 
-// Check if the string is URL.
+// IsURL checks if the string is URL.
 func IsURL(str string) bool {
 	return regexp.MustCompile(PatternURL).MatchString(str)
 }
 
-// Check if the string is ASCII.
+// IsASCII checks if the string is ASCII.
 func IsASCII(str string) bool {
 	return regexp.MustCompile(PatternASCII).MatchString(str)
 }
 
-// Check if the string is printable ASCII.
+// IsPrintableASCII checks if the string is printable ASCII.
 func IsPrintableASCII(str string) bool {
 	return regexp.MustCompile(PatternPrintableASCII).MatchString(str)
 }
 
-// Check if the string is email.
+// IsEmail checks if the string is email.
 func IsEmail(str string) bool {
 	return regexp.MustCompile(PatternEmail).MatchString(str)
 }
 
-// Check if the string is windows path.
+// IsWinPath checks if the string is windows path.
 func IsWinPath(str string) bool {
 	return regexp.MustCompile(PatternWinPath).MatchString(str)
 }
 
-// Check if the string is unix path.
+// IsUnixPath checks if the string is unix path.
 func IsUnixPath(str string) bool {
 	return regexp.MustCompile(PatternUnixPath).MatchString(str)
 }
 
-// Check if the string is valid Semantic Version.
+// IsSemver checks if the string is valid Semantic Version.
 func IsSemver(str string) bool {
 	return regexp.MustCompile(PatternSemver).MatchString(str)
 }
 
-// Check if the string is contains any full-width chars.
+// IsFullWidth checks if the string is contains any full-width chars.
 func IsFullWidth(str string) bool {
 	return regexp.MustCompile(PatternFullWidth).MatchString(str)
 }
 
-// Check if the string is contains any half-width chars.
+// IsHalfWidth checks if the string is contains any half-width chars.
 func IsHalfWidth(str string) bool {
 	return regexp.MustCompile(PatternHalfWidth).MatchString(str)
+}
+
+// IsHash checks if a string is a hash of type algorithm.
+// Algorithm is one of
+// [ 'md4', 'md5', 'sha1', 'sha256', 'sha384', 'sha512',
+// 'ripemd128', 'ripemd160', 'tiger128', 'tiger160', 'tiger192',
+// 'crc32', 'crc32b']
+func IsHash(str, algorithm string) bool {
+	len := "0"
+	algo := strings.ToLower(algorithm)
+
+	if algo == "crc32" || algo == "crc32b" {
+		len = "8"
+	} else if algo == "md5" || algo == "md4" || algo == "ripemd128" || algo == "tiger128" {
+		len = "32"
+	} else if algo == "sha1" || algo == "ripemd160" || algo == "tiger160" {
+		len = "40"
+	} else if algo == "tiger192" {
+		len = "48"
+	} else if algo == "sha256" {
+		len = "64"
+	} else if algo == "sha384" {
+		len = "96"
+	} else if algo == "sha512" {
+		len = "128"
+	} else {
+		return false
+	}
+
+	return regexp.MustCompile("^[a-f0-9]{" + len + "}$").MatchString(str)
 }
