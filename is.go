@@ -27,6 +27,9 @@ var (
 	PatternURLSubdomain = `((www\.)|([a-zA-Z0-9]([-\.][-\._a-zA-Z0-9]+)*))`
 	PatternURL          = `^` + PatternURLSchema + `?` + PatternURLUsername + `?` + `((` + PatternURLIP + `|(\[` + PatternIP + `\])|(([a-zA-Z0-9]([a-zA-Z0-9-_]+)?[a-zA-Z0-9]([-\.][a-zA-Z0-9]+)*)|(` + PatternURLSubdomain + `?))?(([a-zA-Z\x{00a1}-\x{ffff}0-9]+-?-?)*[a-zA-Z\x{00a1}-\x{ffff}0-9]+)(?:\.([a-zA-Z\x{00a1}-\x{ffff}]{1,}))?))\.?` + PatternURLPort + `?` + PatternURLPath + `?$`
 	PatternEmail        = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+	PatternWinPath      = `^[a-zA-Z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$`
+	PatternUnixPath     = `^(/[^/\x00]*)+/?$`
+	PatternSemver       = `^v?(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?$`
 )
 
 // Check is integer
@@ -97,14 +100,32 @@ func IsBase64(str string) bool {
 	return regexp.MustCompile(PatternBase64).MatchString(str)
 }
 
+// Check if the string is URL.
 func IsURL(str string) bool {
 	return regexp.MustCompile(PatternURL).MatchString(str)
 }
 
+// Check if the string is ASCII.
 func IsASCII(str string) bool {
 	return regexp.MustCompile(PatternASCII).MatchString(str)
 }
 
+// Check if the string is email.
 func IsEmail(str string) bool {
 	return regexp.MustCompile(PatternEmail).MatchString(str)
+}
+
+// Check if the string is windows path.
+func IsWinPath(str string) bool {
+	return regexp.MustCompile(PatternWinPath).MatchString(str)
+}
+
+// Check if the string is unix path.
+func IsUnixPath(str string) bool {
+	return regexp.MustCompile(PatternUnixPath).MatchString(str)
+}
+
+// Check if the string is Semantic Versioning.
+func IsSemver(str string) bool {
+	return regexp.MustCompile(PatternSemver).MatchString(str)
 }
