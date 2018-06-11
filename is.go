@@ -11,17 +11,17 @@ import (
 )
 
 const (
-	PatternNumeric        = `^[0-9]+$`
-	PatternInt            = `^(?:[-+]?(?:0|[1-9][0-9]*))$`
-	PatternFloat          = `^(?:[-+]?(?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$`
-	PatternHexadecimal    = `^[0-9a-fA-F]+$`
-	PatternAlpha          = `^[a-zA-Z]+$`
-	PatternAlphanumeric   = `^[a-zA-Z0-9]+$`
-	PatternLatitude       = `^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$`
-	PatternLongitude      = `^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$`
-	PatternBase64         = `^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=|[A-Za-z0-9+\\/]{4})$`
-	PatternASCII          = `^[\x00-\x7F]+$`
-	PatternPrintableASCII = `^[\x20-\x7E]+$`
+	PatternNumeric        = "^[0-9]+$"
+	PatternInt            = "^(?:[-+]?(?:0|[1-9][0-9]*))$"
+	PatternFloat          = "^(?:[-+]?(?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$"
+	PatternHexadecimal    = "^[0-9a-fA-F]+$"
+	PatternAlpha          = "^[a-zA-Z]+$"
+	PatternAlphanumeric   = "^[a-zA-Z0-9]+$"
+	PatternLatitude       = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$"
+	PatternLongitude      = "^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$"
+	PatternBase64         = "^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=|[A-Za-z0-9+\\/]{4})$"
+	PatternASCII          = "^[\x00-\x7F]+$"
+	PatternPrintableASCII = "^[\x20-\x7E]+$"
 	PatternIP             = `(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))`
 	PatternURLSchema      = `((ftp|tcp|udp|wss?|https?):\/\/)`
 	PatternURLUsername    = `(\S+(:\S*)?@)`
@@ -33,11 +33,12 @@ const (
 	PatternEmail          = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
 	PatternWinPath        = `^[a-zA-Z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$`
 	PatternUnixPath       = `^(/[^/\x00]*)+/?$`
-	PatternSemver         = `^v?(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?$`
+	PatternSemver         = "^v?(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?$"
 	PatternFullWidth      = `[^\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]`
 	PatternHalfWidth      = `[\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]`
-	PatternHexcolor       = `^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`
-	PatternRGBcolor       = `^rgb\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*\\)$`
+	PatternHexcolor       = "^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+	PatternRGBcolor       = "^rgb\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*\\)$"
+	PatternRGBAcolor      = "^rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*((0\\.[0-9]{1})|(1\\.0)|(1))\\)$"
 )
 
 // Check is integer
@@ -261,6 +262,11 @@ func IsHexcolor(str string) bool {
 // IsRGBcolor check if the string is a valid RGB color in form rgb(255, 255, 255).
 func IsRGBcolor(str string) bool {
 	return regexp.MustCompile(PatternRGBcolor).MatchString(str)
+}
+
+// IsRGBAcolor check if the string is a valid RGBA color in form rgb(255, 255, 255, 0.5).
+func IsRGBAcolor(str string) bool {
+	return regexp.MustCompile(PatternRGBAcolor).MatchString(str)
 }
 
 // IsLowerCase check if the string is lowercase.

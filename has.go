@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	PatternLowerCase = `.*[[:lower:]]`
-	PatternUpperCase = `.*[[:upper:]]`
+	PatternLowerCase = ".*[[:lower:]]"
+	PatternUpperCase = ".*[[:upper:]]"
 )
 
 // HasLowerCase check if the string contains at least 1 lowercase.
