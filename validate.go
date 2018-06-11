@@ -185,7 +185,7 @@ func ValidateFloatp(data interface{}, key string, min, max float64, code int, no
 // Validate string.
 func ValidateString(data interface{}, key string, min, max int, def ... string) (string, error) {
 	var defVal interface{}
-	if len(def) != 0 {
+	if len(def) > 0 {
 		defVal = def[0]
 	}
 	val, err := checkExist(data, key, defVal)
@@ -219,7 +219,7 @@ func ValidateStringp(data interface{}, key string, min, max int, code int, note 
 func ValidateStringWithPattern(data interface{}, key, pattern string, def ... string) (string, error) {
 	var defVal interface{}
 	ldef := len(def)
-	if ldef != 0 {
+	if ldef > 0 {
 		defVal = def[0]
 	}
 	val, err := checkExist(data, key, defVal)
@@ -317,7 +317,7 @@ func ValidateEnumStringp(data interface{}, key string, validValues []string, cod
 // Validate slice.
 func ValidateSlice(data interface{}, key, sep string, min, max int, def ... string) ([]string, error) {
 	var defVal interface{}
-	if len(def) != 0 {
+	if len(def) > 0 {
 		defVal = def[0]
 	}
 	val, err := checkExist(data, key, defVal)
