@@ -9,7 +9,7 @@ import (
 func TestValidate(t *testing.T) {
 	defer func() {
 		r := recover()
-		if err, ok := r.(*Error); ok {
+		if err, ok := r.(Error); ok {
 			fmt.Println(err.Message)
 		}
 	}()

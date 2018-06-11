@@ -8,8 +8,8 @@ type Error struct {
 	Note    string
 }
 
-func NewError(message string, code int, note string) *Error {
-	return &Error{
+func NewError(message string, code int, note string) Error {
+	return Error{
 		Message: message,
 		Code:    code,
 		Note:    note,
