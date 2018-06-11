@@ -5,6 +5,7 @@ import (
 	"strings"
 	"unicode/utf8"
 	"errors"
+	"regexp"
 )
 
 // Validate 32 bit integer
@@ -208,6 +209,36 @@ func ValidateString(data interface{}, key string, min, max int, def ... string) 
 // Validate string with custom error info.
 func ValidateStringp(data interface{}, key string, min, max int, code int, note string, def ... string) string {
 	val, err := ValidateString(data, key, min, max, def...)
+	if err != nil {
+		panic(NewError(err.Error(), code, note))
+	}
+	return val
+}
+
+// ValidateStringWithPattern validate string with regexp pattern.
+func ValidateStringWithPattern(data interface{}, key, pattern string, def ... string) (string, error) {
+	var defVal interface{}
+	ldef := len(def)
+	if ldef != 0 {
+		defVal = def[0]
+	}
+	val, err := checkExist(data, key, defVal)
+	if err != nil {
+		return "", err
+	}
+	if !regexp.MustCompile(pattern).MatchString(val.(string)) {
+		if ldef == 0 {
+			return "", errors.New(key + " must be a valid string")
+		}
+		return def[0], nil
+	}
+
+	return val.(string), nil
+}
+
+// ValidateStringWithPatternp validate string with regex pattern.
+func ValidateStringWithPatternp(data interface{}, key, pattern string, code int, note string, def ... string) string {
+	val, err := ValidateStringWithPattern(data, key, pattern, def...)
 	if err != nil {
 		panic(NewError(err.Error(), code, note))
 	}
