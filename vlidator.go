@@ -230,7 +230,7 @@ func ValidateEnumInt(data interface{}, key string, validValues []int, def ... in
 
 // Validate enum int with custom error info.
 func ValidateEnumIntp(data interface{}, key string, validValues []int, code int, note string, def ... int) int {
-	val, err := ValidateInt(data, key, -1, -1, def...)
+	val, err := ValidateEnumInt(data, key, validValues, def...)
 	if err != nil {
 		panic(NewError(err.Error(), code, note))
 	}
@@ -241,7 +241,7 @@ func ValidateEnumIntp(data interface{}, key string, validValues []int, code int,
 func ValidateEnumInt64(data interface{}, key string, validValues []int64, def ... int64) (int64, error) {
 	val, err := ValidateInt64(data, key, -1, -1, def...)
 	if err != nil {
-		return 0, nil
+		return 0, err
 	}
 	for _, v := range validValues {
 		if v == val {
@@ -253,7 +253,7 @@ func ValidateEnumInt64(data interface{}, key string, validValues []int64, def ..
 
 // Validate enum int64 with panic.
 func ValidateEnumInt64p(data interface{}, key string, validValues []int64, code int, note string, def ... int64) int64 {
-	val, err := ValidateInt64(data, key, -1, -1, def...)
+	val, err := ValidateEnumInt64(data, key, validValues, def...)
 	if err != nil {
 		panic(NewError(err.Error(), code, note))
 	}
