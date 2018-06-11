@@ -31,6 +31,8 @@ var (
 	PatternWinPath        = `^[a-zA-Z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$`
 	PatternUnixPath       = `^(/[^/\x00]*)+/?$`
 	PatternSemver         = `^v?(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?$`
+	PatternFullWidth      = `[^\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]`
+	PatternHalfWidth      = `[\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]`
 )
 
 // Check is integer
@@ -131,7 +133,17 @@ func IsUnixPath(str string) bool {
 	return regexp.MustCompile(PatternUnixPath).MatchString(str)
 }
 
-// Check if the string is Semantic Versioning.
+// Check if the string is valid Semantic Version.
 func IsSemver(str string) bool {
 	return regexp.MustCompile(PatternSemver).MatchString(str)
+}
+
+// Check if the string is contains any full-width chars.
+func IsFullWidth(str string) bool {
+	return regexp.MustCompile(PatternFullWidth).MatchString(str)
+}
+
+// Check if the string is contains any half-width chars.
+func IsHalfWidth(str string) bool {
+	return regexp.MustCompile(PatternHalfWidth).MatchString(str)
 }
