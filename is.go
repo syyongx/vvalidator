@@ -4,8 +4,10 @@ import (
 	"regexp"
 	"strings"
 	"net"
-	"time"
 	"strconv"
+	"time"
+	"encoding/json"
+	"unicode"
 )
 
 var (
@@ -34,6 +36,10 @@ var (
 	PatternSemver         = `^v?(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?$`
 	PatternFullWidth      = `[^\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]`
 	PatternHalfWidth      = `[\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]`
+	PatternHexcolor       = `^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`
+	PatternRGBcolor       = `^rgb\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*\\)$`
+	PatternLowerCase      = `.*[[:lower:]]`
+	PatternUpperCase      = `.*[[:upper:]]`
 )
 
 // Check is integer
@@ -213,11 +219,68 @@ func IsTime(str string, format string) bool {
 }
 
 // IsRFC3339 check if string is valid timestamp value according to RFC3339
-func IsRFC3339(str string) bool {
+func IsRFC3339Time(str string) bool {
 	return IsTime(str, time.RFC3339)
 }
 
 // IsRFC3339WithoutZone check if string is valid timestamp value according to RFC3339 which excludes the timezone.
-func IsRFC3339WithoutZone(str string) bool {
+func IsRFC3339WithoutZoneTime(str string) bool {
 	return IsTime(str, "2006-01-02T15:04:05")
+}
+
+// IsJSON check if the string is valid JSON (note: uses json.Unmarshal).
+func IsJSON(str string) bool {
+	var js json.RawMessage
+	return json.Unmarshal([]byte(str), &js) == nil
+}
+
+//IsUTFLetter check if the string contains only unicode letter characters.
+//Similar to IsAlpha but for all languages. Empty string is valid.
+func IsUTFLetter(str string) bool {
+	for _, c := range str {
+		if !unicode.IsLetter(c) {
+			return false
+		}
+	}
+	return true
+}
+
+// IsUTFLetterNumeric check if the string contains only unicode letters and numbers. Empty string is valid.
+func IsUTFLetterNumeric(str string) bool {
+	for _, c := range str {
+		if !unicode.IsLetter(c) && !unicode.IsNumber(c) { //letters && numbers are ok
+			return false
+		}
+	}
+	return true
+}
+
+// IsHexcolor check if the string is a hexadecimal color.
+func IsHexcolor(str string) bool {
+	return regexp.MustCompile(PatternHexcolor).MatchString(str)
+}
+
+// IsRGBcolor check if the string is a valid RGB color in form rgb(255, 255, 255).
+func IsRGBcolor(str string) bool {
+	return regexp.MustCompile(PatternRGBcolor).MatchString(str)
+}
+
+// IsLowerCase check if the string is lowercase.
+func IsLowerCase(str string) bool {
+	return str == strings.ToLower(str)
+}
+
+// IsUpperCase check if the string is uppercase.
+func IsUpperCase(str string) bool {
+	return str == strings.ToUpper(str)
+}
+
+// HasLowerCase check if the string contains at least 1 lowercase.
+func HasLowerCase(str string) bool {
+	return regexp.MustCompile(PatternLowerCase).MatchString(str)
+}
+
+// HasUpperCase check if the string contians as least 1 uppercase.
+func HasUpperCase(str string) bool {
+	return regexp.MustCompile(PatternUpperCase).MatchString(str)
 }
