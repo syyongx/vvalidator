@@ -58,10 +58,10 @@ func ValidateInt(data interface{}, key string, min, max int, def ... int) (int, 
 }
 
 // Validate 32 bit integer with custom error info.
-func ValidateIntp(data interface{}, key string, min, max int, code int, note string, def ... int) int {
+func ValidateIntp(data interface{}, key string, min, max int, code int, message string, def ... int) int {
 	val, err := ValidateInt(data, key, min, max, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
@@ -116,10 +116,10 @@ func ValidateInt64(data interface{}, key string, min, max int64, def ... int64) 
 }
 
 // Validate 64 bit integer with custom error info.
-func ValidateInt64p(data interface{}, key string, min, max int64, code int, note string, def ... int64) int64 {
+func ValidateInt64p(data interface{}, key string, min, max int64, code int, message string, def ... int64) int64 {
 	val, err := ValidateInt64(data, key, min, max, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
@@ -174,10 +174,10 @@ func ValidateFloat(data interface{}, key string, min, max float64, def ... float
 }
 
 //  Validate 64 bit float with custom error info.
-func ValidateFloatp(data interface{}, key string, min, max float64, code int, note string, def ... float64) float64 {
+func ValidateFloatp(data interface{}, key string, min, max float64, code int, message string, def ... float64) float64 {
 	val, err := ValidateFloat(data, key, min, max, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
@@ -207,10 +207,10 @@ func ValidateString(data interface{}, key string, min, max int, def ... string) 
 }
 
 // Validate string with custom error info.
-func ValidateStringp(data interface{}, key string, min, max int, code int, note string, def ... string) string {
+func ValidateStringp(data interface{}, key string, min, max int, code int, message string, def ... string) string {
 	val, err := ValidateString(data, key, min, max, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
@@ -237,10 +237,10 @@ func ValidateStringWithPattern(data interface{}, key, pattern string, def ... st
 }
 
 // ValidateStringWithPatternp validate string with regex pattern.
-func ValidateStringWithPatternp(data interface{}, key, pattern string, code int, note string, def ... string) string {
+func ValidateStringWithPatternp(data interface{}, key, pattern string, code int, message string, def ... string) string {
 	val, err := ValidateStringWithPattern(data, key, pattern, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
@@ -260,10 +260,10 @@ func ValidateEnumInt(data interface{}, key string, validValues []int, def ... in
 }
 
 // Validate enum int with custom error info.
-func ValidateEnumIntp(data interface{}, key string, validValues []int, code int, note string, def ... int) int {
+func ValidateEnumIntp(data interface{}, key string, validValues []int, code int, message string, def ... int) int {
 	val, err := ValidateEnumInt(data, key, validValues, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
@@ -283,10 +283,10 @@ func ValidateEnumInt64(data interface{}, key string, validValues []int64, def ..
 }
 
 // Validate enum int64 with panic.
-func ValidateEnumInt64p(data interface{}, key string, validValues []int64, code int, note string, def ... int64) int64 {
+func ValidateEnumInt64p(data interface{}, key string, validValues []int64, code int, message string, def ... int64) int64 {
 	val, err := ValidateEnumInt64(data, key, validValues, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
@@ -306,10 +306,10 @@ func ValidateEnumString(data interface{}, key string, validValues []string, def 
 }
 
 // Validate enum string with custom error info.
-func ValidateEnumStringp(data interface{}, key string, validValues []string, code int, note string, def ... string) string {
+func ValidateEnumStringp(data interface{}, key string, validValues []string, code int, message string, def ... string) string {
 	val, err := ValidateEnumString(data, key, validValues, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
@@ -337,10 +337,10 @@ func ValidateSlice(data interface{}, key, sep string, min, max int, def ... stri
 }
 
 // Validate slice with custom error info.
-func ValidateSlicep(data interface{}, key, sep string, min, max int, code int, note string, def ... string) []string {
+func ValidateSlicep(data interface{}, key, sep string, min, max int, code int, message string, def ... string) []string {
 	val, err := ValidateSlice(data, key, sep, min, max, def...)
 	if err != nil {
-		panic(NewError(err.Error(), code, note))
+		panic(NewError(err.Error(), code, message))
 	}
 	return val
 }
