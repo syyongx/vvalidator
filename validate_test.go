@@ -1,9 +1,9 @@
 package vvalidator
 
 import (
-	"testing"
 	"fmt"
 	"reflect"
+	"testing"
 )
 
 func TestValidate(t *testing.T) {

@@ -1,12 +1,12 @@
 package vvalidator
 
 import (
-	"regexp"
-	"strings"
-	"net"
-	"strconv"
-	"time"
 	"encoding/json"
+	"net"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
 	"unicode"
 )
 

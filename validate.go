@@ -1,11 +1,11 @@
 package vvalidator
 
 import (
+	"errors"
+	"regexp"
 	"strconv"
 	"strings"
 	"unicode/utf8"
-	"errors"
-	"regexp"
 )
 
 // Validate 32 bit integer
