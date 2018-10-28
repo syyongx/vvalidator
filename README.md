@@ -1,5 +1,5 @@
 # vvalidator
-go paramater validator tool.
+Go paramater validator library.
 
 ## Download & Install
 ```shell
