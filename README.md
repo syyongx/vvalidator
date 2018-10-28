@@ -30,7 +30,7 @@ ValidateSlicep(data interface{}, key, sep string, min, max int, code int, messag
 ```
 
 ### is
-```
+```go
 IsNumeric(str string) bool
 IsInt(str string) bool
 IsFloat(str string) bool
@@ -69,7 +69,7 @@ IsUpperCase(str string) bool
 ```
 
 ### has
-```
+```go
 HasLowerCase(str string) bool
 HasUpperCase(str string) bool
 ```
