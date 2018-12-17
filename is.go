@@ -41,21 +41,22 @@ const (
 	PatternRGBAcolor      = "^rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*((0\\.[0-9]{1})|(1\\.0)|(1))\\)$"
 )
 
-// Check is integer
+// IsNumeric check if the string is numeric.
 func IsNumeric(str string) bool {
 	return regexp.MustCompile(PatternNumeric).MatchString(str)
 }
 
-// Check is integer
+// IsInt check if the string is int.
 func IsInt(str string) bool {
 	return regexp.MustCompile(PatternInt).MatchString(str)
 }
 
+// IsFloat check if the string is an float.
 func IsFloat(str string) bool {
 	return regexp.MustCompile(PatternFloat).MatchString(str)
 }
 
-// Check if the string is a hexadecimal number.
+// IsHexadecimal check if the string is a hexadecimal number.
 func IsHexadecimal(str string) bool {
 	return regexp.MustCompile(PatternHexadecimal).MatchString(str)
 }
@@ -218,12 +219,12 @@ func IsTime(str string, format string) bool {
 	return err == nil
 }
 
-// IsRFC3339 check if string is valid timestamp value according to RFC3339
+// IsRFC3339Time check if string is valid timestamp value according to RFC3339
 func IsRFC3339Time(str string) bool {
 	return IsTime(str, time.RFC3339)
 }
 
-// IsRFC3339WithoutZone check if string is valid timestamp value according to RFC3339 which excludes the timezone.
+// IsRFC3339WithoutZoneTime check if string is valid timestamp value according to RFC3339 which excludes the timezone.
 func IsRFC3339WithoutZoneTime(str string) bool {
 	return IsTime(str, "2006-01-02T15:04:05")
 }

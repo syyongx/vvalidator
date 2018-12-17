@@ -8,7 +8,7 @@ import (
 	"unicode/utf8"
 )
 
-// Validate 32 bit integer
+// ValidateInt validate 32 bit integer
 func ValidateInt(data interface{}, key string, min, max int, def ... int) (int, error) {
 	var defVal interface{}
 	ldef := len(def)
@@ -57,7 +57,8 @@ func ValidateInt(data interface{}, key string, min, max int, def ... int) (int, 
 	}
 }
 
-// Validate 32 bit integer with custom error info.
+// ValidateIntp Validate 32 bit integer with custom error info.
+// if err != nil will panic.
 func ValidateIntp(data interface{}, key string, min, max int, code int, message string, def ... int) int {
 	val, err := ValidateInt(data, key, min, max, def...)
 	if err != nil {
@@ -66,7 +67,7 @@ func ValidateIntp(data interface{}, key string, min, max int, code int, message 
 	return val
 }
 
-// Validate 64 bit integer.
+// ValidateInt64 Validate 64 bit integer.
 func ValidateInt64(data interface{}, key string, min, max int64, def ... int64) (int64, error) {
 	var defVal interface{}
 	ldef := len(def)
@@ -115,7 +116,8 @@ func ValidateInt64(data interface{}, key string, min, max int64, def ... int64) 
 	}
 }
 
-// Validate 64 bit integer with custom error info.
+// ValidateInt64p Validate 64 bit integer with custom error info.
+// if err != nil will panic.
 func ValidateInt64p(data interface{}, key string, min, max int64, code int, message string, def ... int64) int64 {
 	val, err := ValidateInt64(data, key, min, max, def...)
 	if err != nil {
@@ -124,7 +126,7 @@ func ValidateInt64p(data interface{}, key string, min, max int64, code int, mess
 	return val
 }
 
-//  Validate 64 bit float.
+// ValidateFloat validate 64 bit float.
 func ValidateFloat(data interface{}, key string, min, max float64, def ... float64) (float64, error) {
 	var defVal interface{}
 	ldef := len(def)
@@ -173,7 +175,8 @@ func ValidateFloat(data interface{}, key string, min, max float64, def ... float
 	}
 }
 
-//  Validate 64 bit float with custom error info.
+// ValidateFloatp validate 64 bit float with custom error info.
+// if err != nil will panic.
 func ValidateFloatp(data interface{}, key string, min, max float64, code int, message string, def ... float64) float64 {
 	val, err := ValidateFloat(data, key, min, max, def...)
 	if err != nil {
@@ -182,7 +185,7 @@ func ValidateFloatp(data interface{}, key string, min, max float64, code int, me
 	return val
 }
 
-// Validate string.
+// ValidateString validate string.
 func ValidateString(data interface{}, key string, min, max int, def ... string) (string, error) {
 	var defVal interface{}
 	if len(def) > 0 {
@@ -206,7 +209,8 @@ func ValidateString(data interface{}, key string, min, max int, def ... string) 
 	return val.(string), nil
 }
 
-// Validate string with custom error info.
+// ValidateStringp validate string with custom error info.
+// if err != nil will panic.
 func ValidateStringp(data interface{}, key string, min, max int, code int, message string, def ... string) string {
 	val, err := ValidateString(data, key, min, max, def...)
 	if err != nil {
@@ -236,7 +240,8 @@ func ValidateStringWithPattern(data interface{}, key, pattern string, def ... st
 	return val.(string), nil
 }
 
-// ValidateStringWithPatternp validate string with regex pattern.
+// ValidateStringWithPatternp validateStringWithPatternp validate string with regex pattern.
+// if err != nil will panic.
 func ValidateStringWithPatternp(data interface{}, key, pattern string, code int, message string, def ... string) string {
 	val, err := ValidateStringWithPattern(data, key, pattern, def...)
 	if err != nil {
@@ -245,7 +250,7 @@ func ValidateStringWithPatternp(data interface{}, key, pattern string, code int,
 	return val
 }
 
-// Validate enum int.
+// ValidateEnumInt validate enum int.
 func ValidateEnumInt(data interface{}, key string, validValues []int, def ... int) (int, error) {
 	val, err := ValidateInt(data, key, -1, -1, def...)
 	if err != nil {
@@ -259,7 +264,8 @@ func ValidateEnumInt(data interface{}, key string, validValues []int, def ... in
 	return 0, errors.New(key + " is invalid")
 }
 
-// Validate enum int with custom error info.
+// ValidateEnumIntp validate enum int with custom error info.
+// if err != nil will panic.
 func ValidateEnumIntp(data interface{}, key string, validValues []int, code int, message string, def ... int) int {
 	val, err := ValidateEnumInt(data, key, validValues, def...)
 	if err != nil {
@@ -268,7 +274,7 @@ func ValidateEnumIntp(data interface{}, key string, validValues []int, code int,
 	return val
 }
 
-// Validate enum int64
+// ValidateEnumInt64 validate enum int64
 func ValidateEnumInt64(data interface{}, key string, validValues []int64, def ... int64) (int64, error) {
 	val, err := ValidateInt64(data, key, -1, -1, def...)
 	if err != nil {
@@ -282,7 +288,8 @@ func ValidateEnumInt64(data interface{}, key string, validValues []int64, def ..
 	return 0, errors.New(key + " is invalid")
 }
 
-// Validate enum int64 with panic.
+// ValidateEnumInt64p Validate enum int64 with panic.
+// if err != nil will panic.
 func ValidateEnumInt64p(data interface{}, key string, validValues []int64, code int, message string, def ... int64) int64 {
 	val, err := ValidateEnumInt64(data, key, validValues, def...)
 	if err != nil {
@@ -291,7 +298,7 @@ func ValidateEnumInt64p(data interface{}, key string, validValues []int64, code 
 	return val
 }
 
-// Validate string
+// ValidateEnumString validate enum string
 func ValidateEnumString(data interface{}, key string, validValues []string, def ... string) (string, error) {
 	val, err := ValidateString(data, key, -1, -1, def...)
 	if err != nil {
@@ -305,7 +312,8 @@ func ValidateEnumString(data interface{}, key string, validValues []string, def 
 	return "", errors.New(key + " is invalid")
 }
 
-// Validate enum string with custom error info.
+// ValidateEnumStringp validate enum string with custom error info.
+// if err != nil will panic.
 func ValidateEnumStringp(data interface{}, key string, validValues []string, code int, message string, def ... string) string {
 	val, err := ValidateEnumString(data, key, validValues, def...)
 	if err != nil {
@@ -314,7 +322,7 @@ func ValidateEnumStringp(data interface{}, key string, validValues []string, cod
 	return val
 }
 
-// Validate slice.
+// ValidateSlice validate slice.
 func ValidateSlice(data interface{}, key, sep string, min, max int, def ... string) ([]string, error) {
 	var defVal interface{}
 	if len(def) > 0 {
@@ -336,7 +344,8 @@ func ValidateSlice(data interface{}, key, sep string, min, max int, def ... stri
 	return vals, nil
 }
 
-// Validate slice with custom error info.
+// ValidateSlicep validate slice with custom error info.
+// if err != nil will panic.
 func ValidateSlicep(data interface{}, key, sep string, min, max int, code int, message string, def ... string) []string {
 	val, err := ValidateSlice(data, key, sep, min, max, def...)
 	if err != nil {
@@ -367,9 +376,8 @@ func checkExist(data interface{}, key string, def interface{}) (interface{}, err
 	if val == "" {
 		if def == nil {
 			return nil, errors.New(key + " can't be empty")
-		} else {
-			return def, nil
 		}
+		return def, nil
 	}
 
 	return val, nil
