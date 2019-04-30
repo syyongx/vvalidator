@@ -1,5 +1,13 @@
 # vvalidator
-Go paramater validator library.
+
+[![GoDoc](https://godoc.org/github.com/syyongx/vvalidator?status.svg)](https://godoc.org/github.com/syyongx/vvalidator)
+[![Go Report Card](https://goreportcard.com/badge/github.com/syyongx/vvalidator)](https://goreportcard.com/report/github.com/syyongx/vvalidator)
+[![MIT licensed][3]][4]
+
+[3]: https://img.shields.io/badge/license-MIT-blue.svg
+[4]: LICENSE
+
+Go parameter validator library.
 
 ## Download & Install
 ```shell
