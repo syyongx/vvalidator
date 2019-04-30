@@ -69,9 +69,9 @@ IsRFC3339WithoutZoneTime(str string) bool
 IsJSON(str string) bool
 IsUTFLetter(str string) bool
 IsUTFLetterNumeric(str string) bool
-IsHexcolor(str string) bool
-IsRGBcolor(str string) bool
-IsRGBAcolor(str string) bool
+IsHexColor(str string) bool
+IsRGBColor(str string) bool
+IsRGBAColor(str string) bool
 IsLowerCase(str string) bool
 IsUpperCase(str string) bool
 ```
