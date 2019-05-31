@@ -1,4 +1,4 @@
-# vvalidator
+# VValidator
 
 [![GoDoc](https://godoc.org/github.com/syyongx/vvalidator?status.svg)](https://godoc.org/github.com/syyongx/vvalidator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/syyongx/vvalidator)](https://goreportcard.com/report/github.com/syyongx/vvalidator)
@@ -83,4 +83,4 @@ HasUpperCase(str string) bool
 ```
 
 ## LICENSE
-vvalidator source code is licensed under the [MIT](https://github.com/syyongx/vvalidator/blob/master/LICENSE) Licence.
+VValidator source code is licensed under the [MIT](https://github.com/syyongx/vvalidator/blob/master/LICENSE) Licence.
